@@ -1,6 +1,6 @@
 name: Trivy Scan and SBOM Generation
 
-  on:
+on:
     push:
       branches:
         - main
