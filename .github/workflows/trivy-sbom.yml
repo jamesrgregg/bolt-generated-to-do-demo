@@ -1,14 +1,14 @@
 name: Trivy Scan and SBOM Generation
 
 on:
-	push:
-		branches:
-			- main
-	pull_request:
-		branches:
-			- main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-  jobs:
+jobs:
     trivy-scan:
       runs-on: ubuntu-latest
 
