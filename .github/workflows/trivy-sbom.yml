@@ -1,35 +1,35 @@
 name: Trivy Scan and SBOM Generation
 
-  on:
-    push:
-      branches:
-        - main
-    pull_request:
-      branches:
-        - main
+on:
+	push:
+		branches:
+			- main
+	pull_request:
+		branches:
+			- main
 
   jobs:
     trivy-scan:
       runs-on: ubuntu-latest
 
       steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        - name: Checkout code
+          uses: actions/checkout@v3
 
-      - name: Set up Trivy
-        uses: aquasecurity/trivy-action@v0.2.0
-        with:
-          scan-type: 'fs'
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: true
+        - name: Set up Trivy
+          uses: aquasecurity/trivy-action@v0.2.0
+          with:
+            scan-type: 'fs'
+            format: 'table'
+            exit-code: '0'
+            ignore-unfixed: true
 
-      - name: Generate SBOM
-        run: |
-          trivy fs --format cyclonedx --output sbom.xml .
+        - name: Generate SBOM
+          run: |
+            trivy fs --format cyclonedx --output sbom.xml .
 
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v3
-        with:
-          name: sbom
-          path: sbom.xml
+        - name: Upload SBOM
+          uses: actions/upload-artifact@v3
+          with:
+            name: sbom
+            path: sbom.xml
