@@ -8,7 +8,7 @@ on:
       branches:
         - main
 
-  jobs:
+jobs:
     trivy-scan:
       runs-on: ubuntu-latest
 
