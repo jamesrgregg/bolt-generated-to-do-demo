@@ -1,36 +1,31 @@
 name: Trivy Scan and SBOM Generation
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
 
-jobs:
+  jobs:
     trivy-scan:
       runs-on: ubuntu-latest
 
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
 
         - name: Set up Trivy
-          uses: aquasecurity/trivy-action@0.29.0
-          with:
-            scan-type: 'fs'
-            format: 'table'
-            exit-code: '0'
-            ignore-unfixed: true
-
-        - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
-          uses: aquasecurity/trivy-action@0.29.0
+          uses: aquasecurity/trivy-action@main
           with:
             scan-type: 'fs'
             format: 'cyclonedx'
-            output: 'dependency-results.sbom.xml'
-            github-pat: ${{ secrets.GITHUB_TOKEN }} # or ${{ secrets.github_pat_name }} if you're using a PAT
+            output: 'sbom.xml'
+            exit-code: '0'
+            ignore-unfixed: true
 
         - name: Upload SBOM
           uses: actions/upload-artifact@v3
